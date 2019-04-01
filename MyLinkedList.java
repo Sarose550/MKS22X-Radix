@@ -15,8 +15,9 @@ public class MyLinkedList<E>{
 	}
 
 	public boolean add(E data){
-		Node<E> n = new Node<E>(data, null);
+		Node<E> n = new Node<E>(data, null, null);
 		end.setNext(n);
+		n.setPrev(end);
 		this.end = n;
 		size += 1;
 		return true;
@@ -46,20 +47,27 @@ public class MyLinkedList<E>{
 
 class Node<E>{
 	private Node next;
+	private Node prev;
 	private E data;
 
 	public Node(){
 		data = null;
+		prev = null;
 		next = null;
 	}
 
-	public Node(E stuff, Node n){
+	public Node(E stuff, Node o, Node n){
 		data = stuff;
+		prev = o;
 		next = n;
 	}
 
 	public Node getNext(){
 		return next;
+	}
+
+	public Node getPrev(){
+		return prev;
 	}
 
 	public E getData(){
@@ -68,6 +76,10 @@ class Node<E>{
 	
 	public void setNext(Node other){
 		next = other;
+	}
+
+	public Node setPrev(Node other){
+		prev = other;
 	}
 
 	public void setData(E stuff){
