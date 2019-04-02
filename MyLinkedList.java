@@ -14,7 +14,7 @@ public class MyLinkedList<E>{
 		end = null;
 	}
 
-	public boolean add(E data){
+	public boolean addLast(E data){
 		Node<E> n = new Node<E>(data, null, null);
 		end.setNext(n);
 		n.setPrev(end);
@@ -23,9 +23,19 @@ public class MyLinkedList<E>{
 		return true;
 	}
 
+	public boolean addFirst(E data){
+		Node<E> n = new Node<E>(data, null, null);
+		start.setPrev(n);
+		n.setNext(start);
+		this.start = n;
+		size += 1;
+		return true;
+	}
+
 	public void extend(MyLinkedList<E> other){
 		end.setNext(other.start);
-		this.end = other.end;
+		other.start.setPrev(end);
+		end = other.end;
 		size += other.size;
 		other.clear();
 	}
