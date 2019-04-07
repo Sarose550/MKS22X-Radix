@@ -1,34 +1,93 @@
+import java.util.*;
 public class MyLinkedList<E>{
 	private int size;
 	private Node<E> start;
 	private Node<E> end;
+
+	public class Node<E>{
+		private Node<E> next;
+		private Node<E> prev;
+		private E data;
+
+		@SuppressWarnings("unchecked")
+		public Node(){
+			data = null;
+		}
+
+		public Node(E stuff){
+			data = stuff;
+		}
+
+		public Node<E> getNext(){
+			return next;
+		}
+
+		public Node<E> getPrev(){
+			return prev;
+		}
+
+		public E getData(){
+			return data;
+		}
+	
+		public void setNext(Node<E> other){
+			next = other;
+		}
+
+		public void setPrev(Node<E> other){
+			prev = other;
+		}
+
+		public void setData(E stuff){
+			data = stuff;
+		}
+	}
 
 
 	public MyLinkedList(){
 		size = 0;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void clear(){
 		size = 0;
 		start = null;
 		end = null;
 	}
 
+	public int getSize(){
+		return size;
+	}
+
+	@SuppressWarnings("unchecked")
 	public boolean addLast(E data){
-		Node<E> n = new Node<E>(data, null, null);
+		Node<E> n = new Node<E>(data);
+		if(size == 0){
+			start = n;
+			end = n;
+			size++;
+			return true;
+		}
 		end.setNext(n);
 		n.setPrev(end);
 		this.end = n;
-		size += 1;
+		size++;
 		return true;
 	}
 
+	@SuppressWarnings("unchecked")
 	public boolean addFirst(E data){
-		Node<E> n = new Node<E>(data, null, null);
+		Node<E> n = new Node<E>(data);
+		if(size == 0){
+			start = n;
+			end = n;
+			size++;
+			return true;
+		}
 		start.setPrev(n);
 		n.setNext(start);
 		this.start = n;
-		size += 1;
+		size++;
 		return true;
 	}
 
@@ -44,55 +103,39 @@ public class MyLinkedList<E>{
 		E data = start.getData();
 		if(size == 1){
 			start = null;
+			end = null;
 			size = 0;
 		}
+
 		else{
 			Node newstart = start.getNext();
 			start = newstart;
-			size -= 1;
+			size--;
 		}
 		return data;
 	}
-}
 
-class Node<E>{
-	private Node next;
-	private Node prev;
-	private E data;
+	public E removeLast(){
+		E data = end.getData();
+		if(size == 1){
+			start = null;
+			end = null;
+			size = 0;
+		}
 
-	public Node(){
-		data = null;
-		prev = null;
-		next = null;
-	}
-
-	public Node(E stuff, Node o, Node n){
-		data = stuff;
-		prev = o;
-		next = n;
-	}
-
-	public Node getNext(){
-		return next;
-	}
-
-	public Node getPrev(){
-		return prev;
-	}
-
-	public E getData(){
+		else{
+			Node newend = end.getPrev();
+			end = newend;
+			size--;
+		}
 		return data;
 	}
-	
-	public void setNext(Node other){
-		next = other;
+
+	public E getFirst(){
+		return start.getData();
 	}
 
-	public Node setPrev(Node other){
-		prev = other;
-	}
-
-	public void setData(E stuff){
-		data = stuff;
+	public E getLast(){
+		return end.getData();
 	}
 }
